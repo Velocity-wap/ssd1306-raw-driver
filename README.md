@@ -22,13 +22,18 @@ To understand and implement the SSD1306 controller from the datasheet level, sta
 - Developed custom `ssd1306_init()` based on datasheet command table
 - Display initializes and operates without external libraries
 
+## Phase 2 – Framebuffer & Pixel Rendering
+- Implemented 1024-byte framebuffer (uint8_t ssd1306_buffer[1024])
+- Pixel mapping via set_pixel(x, y) using page/bit math
+- ssd1306_clear() to blank the framebuffer using memset
+- ssd1306_update() pushes full 1024-byte buffer to display over I2C
+- Handled Wire library 32-byte limit by chunking transmissions
+- Successfully rendered single pixel at center of screen
 ---
 
 ## Upcoming Work
 
-- Implement 1024-byte framebuffer
-- Pixel mapping (x, y → page/bit)
-- Page and column addressing
-- Full buffer update routine
+- Built-in drawing functions (draw_line, draw_rect, draw_circle)
+- Character and string rendering (draw_char, draw_string)
 - Port to ESP32
 - Port to STM32
