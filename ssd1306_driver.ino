@@ -10,7 +10,8 @@ void setup(){
     ssd1306_update();
 }
 
-void loop(){
+void loop(){ 
+//Example: bouncing horizontal line across the center of the screen
   ssd1306_clear();
   set_pixel(x, 31);
   set_pixel(x, 32);
