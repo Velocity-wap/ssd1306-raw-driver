@@ -29,11 +29,15 @@ To understand and implement the SSD1306 controller from the datasheet level, sta
 - ssd1306_update() pushes full 1024-byte buffer to display over I2C
 - Handled Wire library 32-byte limit by chunking transmissions
 - Successfully rendered single pixel at center of screen
+## Phase 3 – Graphics Primitives
+- Implemented drawLine() using Bresenham's line algorithm with vertical line special case
+- Implemented drawRect() using four drawLine() calls
+- Implemented drawCircle() using Midpoint Circle algorithm with 8-point symmetry
+- Separated graphics functions into dedicated graphics.cpp file
 ---
 
 ## Upcoming Work
 
-- Built-in drawing functions (draw_line, draw_rect, draw_circle)
 - Character and string rendering (draw_char, draw_string)
 - Port to ESP32
 - Port to STM32
