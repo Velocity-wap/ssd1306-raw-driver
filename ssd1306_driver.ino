@@ -1,7 +1,6 @@
 #include <Wire.h>
 #include "ssd1306.h"
 #include <string.h>
-int x = 62;
 
 void setup(){
     Wire.begin();
@@ -10,16 +9,20 @@ void setup(){
     ssd1306_update();
 }
 
-void loop(){ 
-//Example: bouncing horizontal line across the center of the screen
-  ssd1306_clear();
-  set_pixel(x, 31);
-  set_pixel(x, 32);
-  set_pixel(x, 33);
+void loop(){
+  // drawLine(0,0,0,20);         //vertical
+  // ssd1306_update();
+  drawLine(0, 0, 127, 63);   //diagonal
   ssd1306_update();
-  x += 1;
-  if (x > 67){
-    x = 62;
-  }
+  // drawLine(0, 0, 127, 10);   //gentle slope
+  // ssd1306_update();
+  // drawLine(0, 0, 25, 63);    //steep slope
+  // ssd1306_update();
+  // drawLine(127, 0, 0, 63);   //going left
+  // ssd1306_update();
+  drawCircle(64, 32, 20);   //draws circle
+  ssd1306_update();
+  drawRect(10, 10, 50, 30); //draws rectangle
+  ssd1306_update();
   delay(1000);
 }
