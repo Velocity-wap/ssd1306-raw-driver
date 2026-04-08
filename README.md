@@ -34,10 +34,12 @@ To understand and implement the SSD1306 controller from the datasheet level, sta
 - Implemented drawRect() using four drawLine() calls
 - Implemented drawCircle() using Midpoint Circle algorithm with 8-point symmetry
 - Separated graphics functions into dedicated graphics.cpp file
+## Phase 4 - Port to STM32
+- Porting the Driver to STM32 using No HAL
+- Implimenting direct I2C communication protocol 
 ---
 
 ## Upcoming Work
 
 - Character and string rendering (draw_char, draw_string)
 - Port to ESP32
-- Port to STM32
