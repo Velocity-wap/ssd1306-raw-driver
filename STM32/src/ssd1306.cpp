@@ -1,14 +1,15 @@
 #include "ssd1306.h"
+#include "i2c.h"
 #include <string.h>
 uint8_t ssd1306_buffer[1024];
 void ssd1306_write_command(uint8_t cmd){
-  Wire.beginTransmission(0x3C);
-  Wire.write(0x00);
-  Wire.write(cmd);
-  Wire.endTransmission();
+  i2c_start(0x3C);
+  i2c_write_byte(0x00);
+  i2c_write_byte(cmd);
+  i2c_stop();
 }
 
-void ssd1306_init(){
+void ssd1306_init(void){
   ssd1306_write_command(0xA8);//Set Mux ratio 
   ssd1306_write_command(0x3F);//64 rows
   ssd1306_write_command(0xD3);//set display offset
@@ -29,7 +30,7 @@ void ssd1306_init(){
   ssd1306_write_command(0xAF);//display on
 }
 
-void ssd1306_clear(){
+void ssd1306_clear(void){
   memset(ssd1306_buffer, 0x00,sizeof(ssd1306_buffer) );
 }
 void set_pixel(uint8_t x, uint8_t y){
@@ -38,28 +39,21 @@ void set_pixel(uint8_t x, uint8_t y){
   uint8_t bit = y % 8;  // which pixel vertically inside that byte (0-7)
   ssd1306_buffer[index] |= (1 << bit);  // Buffer is just a flat array that respresents all 8 pages.
 }
-void ssd1306_update(){
-  ssd1306_write_command(0x20);//setting up addressing modes
-  ssd1306_write_command(0x00);//setting up horizontal addressing mode
+void ssd1306_update(void){
+  ssd1306_write_command(0x20); //setting up addressing modes
+  ssd1306_write_command(0x00); //setting up horizontal addressing mode
 
-  ssd1306_write_command(0x21);//set column address
-  ssd1306_write_command(0x00);//initially from 0
-  ssd1306_write_command(0x7f);//ends at 127
+  ssd1306_write_command(0x21); //set column address
+  ssd1306_write_command(0x00); //initially from 0
+  ssd1306_write_command(0x7f); //ends at 127
 
-  ssd1306_write_command(0x22);//set page address
-  ssd1306_write_command(0x00);//initially from 0
-  ssd1306_write_command(0x07);//ends at 7 
+  ssd1306_write_command(0x22); //set page address
+  ssd1306_write_command(0x00); //initially from 0
+  ssd1306_write_command(0x07); //ends at 7 
     
-  Wire.beginTransmission(0x3C);
-  Wire.write(0x40);
+  i2c_start(0x3C);
+  i2c_write_byte(0x40);
   for(int i = 0; i < 1024; i++){
-    Wire.write(ssd1306_buffer[i]);
-    if(i % 8 == 7){
-        Wire.endTransmission();
-        Wire.beginTransmission(0x3C);
-        Wire.write(0x40);
-      //Wire library can only send 30 bytes of data per transmission so we send 1024 bytes in chunks of 8 bytes per transmission
-    }
-  }
-  Wire.endTransmission();
+    i2c_write_byte(ssd1306_buffer[i]);}
+  i2c_stop();
 }
