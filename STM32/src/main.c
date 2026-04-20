@@ -2,20 +2,22 @@
 #include "ssd1306.h"
 
 int main(void) {
-    blink_setup();      // LED for debugging
-    i2c_init();         // Initialize I2C
+    blink_setup();      // LED setup for debugging
+    i2c_gpio_config();      // Configure PB6, PB7 as outputs
     
     ssd1306_init();     // Initialize display
-    ssd1306_clear();    // Clear buffer
+    ssd1306_clear();    // Clear framebuffer
     
     // Draw something
+    set_pixel(64, 32);
     drawLine(10, 10, 118, 54);
-    drawRect(20, 20, 30, 30);
+    drawRect(20, 20, 40, 30);
     drawCircle(64, 32, 20);
     
-    ssd1306_update();   // Send buffer to display (displays' RAM basically)
+    ssd1306_update();   // Send framebuffer to display
     
-    while(1) {
-        // Keep display on
-    }
+    // Success indicator
+    for(int i = 0; i < 10; i++) blink_test();
+    
+    while(1);           // Stop here
 }
