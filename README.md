@@ -38,7 +38,7 @@ To understand and implement the SSD1306 controller from the datasheet level, sta
 - Replaced STM32 hardware I2C (unreliable flag handling) with software bit-bang I2C using GPIO pins PB6 (SDA) and PB7 (SCL)
 - Implemented I2C protocol manually: START, STOP, 8-bit data transmission, and 9th clock ACK pulse
 - Calibrated software delays to achieve ~200–400 kHz communication speed
-- Ported complete SSD1306 driver (framebuffer, graphics primitives) to STM32F103 without HAL or Arduino Wire library
+- Ported complete SSD1306 driver (framebuffer, graphics primitives) to STM32F103 without HAL or any external library
 ---
 
 ## Upcoming Work
