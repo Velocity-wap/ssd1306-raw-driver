@@ -9,7 +9,7 @@ To understand and implement the SSD1306 controller from the datasheet level, sta
 ---
 
 ## Hardware
-
+- STM32 BluePill (STM32F103C8T6)
 - Arduino UNO Development Board
 - SSD1306 128x64 OLED (I2C)
 
@@ -34,12 +34,13 @@ To understand and implement the SSD1306 controller from the datasheet level, sta
 - Implemented drawRect() using four drawLine() calls
 - Implemented drawCircle() using Midpoint Circle algorithm with 8-point symmetry
 - Separated graphics functions into dedicated graphics.cpp file
-## Phase 4 - Port to STM32
-- Porting the Driver to STM32 using No HAL
-- Implimenting direct I2C communication protocol 
+## Phase 4 - Port to STM32 and BITBANG I2C
+- Replaced STM32 hardware I2C (unreliable flag handling) with software bit-bang I2C using GPIO pins PB6 (SDA) and PB7 (SCL)
+- Implemented I2C protocol manually: START, STOP, 8-bit data transmission, and 9th clock ACK pulse
+- Calibrated software delays to achieve ~200–400 kHz communication speed
+- Ported complete SSD1306 driver (framebuffer, graphics primitives) to STM32F103 without HAL or Arduino Wire library
 ---
 
 ## Upcoming Work
-
+- Code refactoring and modularization
 - Character and string rendering (draw_char, draw_string)
-- Port to ESP32
