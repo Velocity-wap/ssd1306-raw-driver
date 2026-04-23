@@ -1,6 +1,12 @@
 #include "i2c.h"
 #include "ssd1306.h"
 
+I2C_config i2c = {
+    .SDA_PIN = 6,
+    .SCL_PIN = 7,
+    .delay_us = 1,
+};
+
 int main(void) {
     blink_setup();      // LED setup for debugging
     i2c_gpio_config();      // Configure PB6, PB7 as outputs
