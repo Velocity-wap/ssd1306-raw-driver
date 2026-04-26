@@ -9,9 +9,9 @@ I2C_config i2c = {
 
 int main(void) {
     blink_setup();      // LED setup for debugging
-    i2c_gpio_config();      // Configure PB6, PB7 as outputs
+    i2c_gpio_config(&i2c);      // Configure PB6, PB7 as outputs
     
-    ssd1306_init();     // Initialize display
+    ssd1306_init(&i2c);     // Initialize display
     ssd1306_clear();    // Clear framebuffer
     
     // Draw something
@@ -20,7 +20,7 @@ int main(void) {
     drawRect(20, 20, 40, 30);
     drawCircle(64, 32, 20);
     
-    ssd1306_update();   // Send framebuffer to display
+    ssd1306_update(&i2c);   // Send framebuffer to display
     
     // Success indicator
     for(int i = 0; i < 10; i++) blink_test();
